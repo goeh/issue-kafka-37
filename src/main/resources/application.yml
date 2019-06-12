@@ -15,8 +15,11 @@ micronaut:
 
 ---
 kafka:
+  embedded:
+    enabled: true
+    topics: test
   bootstrap:
-    servers: localhost:9092
+    servers: localhost:${random.port}
 
 ---
 endpoints:

@@ -31,6 +31,7 @@ configurations {
 dependencies {
     annotationProcessor "io.micronaut:micronaut-inject-java"
     annotationProcessor "io.micronaut:micronaut-validation"
+
     compile "io.micronaut:micronaut-management"
     compile "io.micronaut:micronaut-http-client"
     compile "io.micronaut.configuration:micronaut-micrometer-core"
@@ -40,22 +41,30 @@ dependencies {
     compile "io.micronaut:micronaut-runtime"
     compile "io.micronaut.configuration:micronaut-kafka"
     compile "io.micronaut:micronaut-http-server-netty"
+
     runtime "ch.qos.logback:logback-classic:1.2.3"
+
     testAnnotationProcessor "io.micronaut:micronaut-inject-java"
-    testCompile "org.junit.jupiter:junit-jupiter-api"
-    testCompile "io.micronaut.test:micronaut-test-junit5"
+
     testCompile 'org.apache.kafka:kafka-clients:2.1.1:test'
     testCompile 'org.apache.kafka:kafka_2.12:2.1.1'
     testCompile 'org.apache.kafka:kafka_2.12:2.1.1:test'
+
+    testCompile "org.junit.jupiter:junit-jupiter-api"
+    testCompile "io.micronaut.test:micronaut-test-junit5"
     testRuntime "org.junit.jupiter:junit-jupiter-engine"
 }
 
 test.classpath += configurations.developmentOnly
 
 mainClassName = "issue.Application"
-// use JUnit 5 platform
+
 test {
     useJUnitPlatform()
+    testLogging {
+        outputs.upToDateWhen {false}
+        showStandardStreams = true
+    }
 }
 
 shadowJar {
